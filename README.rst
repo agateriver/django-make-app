@@ -44,14 +44,11 @@ This will be generated from models definitions:
 Installation
 ------------
 
-Supported Python versions are: ``2.7``, ``3.4``, ``3.5``, ``3.6``, ``pypy`` and ``pypy3``.
+Supported Python versions are:  ``3.4+`` and ``pypy3``.
 
 .. code:: shell
 
     pip install --upgrade django-make-app
-
-Python ``3.3`` is not supported due to incompatibility of yapf (see: https://github.com/google/yapf#python-versions). If you're on Python
-``3.3``, you can use this package with option ``django-make-app generate ... --no-optimize`` (this will skip yapf).
 
 Usage
 -----

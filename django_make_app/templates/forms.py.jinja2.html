@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 from django import forms
 from .models import {% for model in models %}{{ model.name }}{% if not loop.last %}, {% endif %}{% endfor %}

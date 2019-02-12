@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
-# ! python2
+# ! python3
 
-from __future__ import (absolute_import, division, print_function, unicode_literals)
-
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 
 {% for model in models %}
@@ -14,7 +12,7 @@ class {{ model.name }}(models.Model):{% for field in model.fields %}
         verbose_name = "{{ model.name }}"
         verbose_name_plural = "{{ model.name }}s"
 
-    def __unicode__(self):
+    def __str__(self):
         return "{}".format(self.id)
 
     def get_absolute_url(self):
