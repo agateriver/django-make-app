@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 from jinja2 import FileSystemLoader, Environment
-
+from .utils import xplural
 
 class TemplateRenderer(object):
     def __init__(self, templates_directory, template_name, item):
@@ -20,8 +18,8 @@ class TemplateRenderer(object):
     def _render_from_template(self, template_name, **kwargs):
         loader = FileSystemLoader(self._templates_directory)
         env = Environment(loader=loader)
+        env.filters['xplural'] = xplural
         template = env.get_template(template_name)
-
         render = template.render(**kwargs)
 
         render = render.replace("[[", "{{")
@@ -29,7 +27,7 @@ class TemplateRenderer(object):
 
         render = render.replace("[%", "{%")
         render = render.replace("%]", "%}")
-
+        
         return render
 
     def render(self, context):

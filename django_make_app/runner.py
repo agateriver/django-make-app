@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function)
+# ! python3
 
 import io
 import logging
 import os
 import shutil
-
+from pprint import pprint
 import click
 
 from django_make_app.generators import TemplateFileAppGenerator
@@ -18,7 +16,7 @@ from django_make_app.structure import get_structure
 logger = logging.getLogger(__name__)
 click.disable_unicode_literals_warning = False
 
-YAML_FILENAME = u"app_schema.yaml"
+YAML_FILENAME = u"apps_schema.yaml"
 
 
 @click.group()
@@ -44,7 +42,7 @@ def write_config():
 @click.option(u'-w', u'--quiet', count=True)
 def generate(app, force, no_optimize, verbose, quiet):
     """
-    app: this will be resolved to os.getcwd()/{app}.yml
+    app: this will be resolved from os.getcwd()/apps_schema.yaml
     """
     logging.basicConfig(level=logging.WARN + 10 * quiet - 10 * verbose)
 
@@ -62,6 +60,7 @@ def generate(app, force, no_optimize, verbose, quiet):
         raise click.BadArgumentUsage(u"App not found")
 
     normalized_data = normalize_schema(target_app)
+    pprint(normalized_data)
     app_target_path = os.path.join(cwd, app)
 
     if os.path.exists(app_target_path):

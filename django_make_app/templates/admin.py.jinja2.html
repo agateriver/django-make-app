@@ -16,6 +16,6 @@ class {{ model.name }}AdminForm(forms.ModelForm):
 @admin.register({{ model.name }})
 class {{ model.name }}Admin(admin.ModelAdmin):
     form = {{ model.name }}AdminForm
-    list_display = ['__unicode__', {% for field in model.fields %}'{{ field.name }}'{% if not loop.last %}, {% endif %}{% endfor %}]
+    list_display = ['__str__', {% for field in model.fields %}'{{ field.name }}'{% if not loop.last %}, {% endif %}{% endfor %}]
 
 {% endfor %}

@@ -62,10 +62,10 @@ If you want to generate app called ``library``, create a file ``app_schema.yaml`
             name: library           # all files will be generated into library/ directory (will be created)
             models:
               - User:               # model name
-                - name:char         # model field "name" of type "char"
-                - email:char        # model field "email" of type "char"
+                - name:char:Name         # model field "name" of type "char" and verbose_name "Name"
+                - email:char:EMail        # model field "email" of type "char" and verbose_name "EMail"
               - Book:               # another model
-                - library:fk        # model field "library" of type "foreign key" to "library"
+                - library:fk:Library        # model field "library" of type "foreign key" to "library",and verbose_name "EMail"
               - Article             # empty model without fields
         -
             name: my_another_awesome_app
@@ -77,7 +77,7 @@ You can also print example configuration by executing (or check `templates/examp
 
 .. code:: shell
 
-    django-make-app write_config > app_schema.yaml
+    django-make-app write_config > apps_schema.yaml
 
 Finally to generate source code of your app, execute:
 

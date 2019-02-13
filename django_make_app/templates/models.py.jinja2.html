@@ -9,8 +9,8 @@ class {{ model.name }}(models.Model):{% for field in model.fields %}
     {{ field.name }} = models.{{ field.class }}{% endfor %}
     class Meta:
         ordering = ('-id',)
-        verbose_name = "{{ model.name }}"
-        verbose_name_plural = "{{ model.name }}s"
+        verbose_name = "{{ model.verbose_name }}"
+        verbose_name_plural = "{{ model.verbose_name|xplural }}"
 
     def __str__(self):
         return "{}".format(self.id)

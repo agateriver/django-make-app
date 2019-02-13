@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 import re
 
@@ -30,26 +28,26 @@ class StructureKeyword(object):
 
 MAPPINGS = {
     # Relations
-    "fk": (lambda field_name: "ForeignKey(\"__app__.{to}\")".format(to=field_name.title())),
-    "o2o": (lambda field_name: "ForeignKey(\"{to}\")".format(to=field_name)),
-    "m2m": (lambda field_name: "ForeignKey(\"{to}\")".format(to=field_name)),
+    "fk": (lambda field_name, verbose_name: "ForeignKey(\"__app__.{to}\", verbose_name=\"{verbose_name}\")".format(to=field_name.title(), verbose_name=verbose_name)),
+    "o2o": (lambda field_name, verbose_name: "ForeignKey(\"{to}\", verbose_name=\"{verbose_name}\")".format(to=field_name, verbose_name=verbose_name)),
+    "m2m": (lambda field_name, verbose_name: "ForeignKey(\"{to}\", verbose_name=\"{verbose_name}\")".format(to=field_name, verbose_name=verbose_name)),
 
     # Types
-    "text": (lambda *args, **kwargs: "TextField()"),
-    "char": (lambda *args, **kwargs: "CharField(max_length=\"{max_length}\")".format(max_length=255)),
-    "boolean": (lambda *args, **kwargs: "BooleanField()"),
-    "date": (lambda *args, **kwargs: "DateField()"),
-    "datetime": (lambda *args, **kwargs: "DateTimeField()"),
-    "decimal": (lambda *args, **kwargs: "DecimalField()"),
-    "filepath": (lambda *args, **kwargs: "FilePathField()"),
-    "float": (lambda *args, **kwargs: "FloatField()"),
-    "integer": (lambda *args, **kwargs: "IntegerField()"),
-    "ip": (lambda *args, **kwargs: "IPAddressField()"),
-    "gip": (lambda *args, **kwargs: "GenericIPAddressField()"),
-    "nboolean": (lambda *args, **kwargs: "NullBooleanField()"),
-    "time": (lambda *args, **kwargs: "TimeField()"),
-    "binary": (lambda *args, **kwargs: "BinaryField()"),
-    "auto": (lambda *args, **kwargs: "AutoField()"),
+    "text": (lambda field_name, verbose_name, *args, **kwargs: "TextField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "char": (lambda field_name, verbose_name, *args, **kwargs: "CharField(max_length={max_length},verbose_name=\"{verbose_name}\")".format(max_length=255, verbose_name=verbose_name)),
+    "boolean": (lambda field_name, verbose_name, *args, **kwargs: "BooleanField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "date": (lambda field_name, verbose_name, *args, **kwargs: "DateField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "datetime": (lambda field_name, verbose_name, *args, **kwargs: "DateTimeField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "decimal": (lambda field_name, verbose_name, *args, **kwargs: "DecimalField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "filepath": (lambda field_name, verbose_name, *args, **kwargs: "FilePathField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "float": (lambda field_name, verbose_name, *args, **kwargs: "FloatField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "integer": (lambda field_name, verbose_name, *args, **kwargs: "IntegerField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "ip": (lambda field_name, verbose_name, *args, **kwargs: "IPAddressField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "gip": (lambda field_name, verbose_name, *args, **kwargs: "GenericIPAddressField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "nboolean": (lambda field_name, verbose_name, *args, **kwargs: "NullBooleanField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "time": (lambda field_name, verbose_name, *args, **kwargs: "TimeField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "binary": (lambda field_name, verbose_name, *args, **kwargs: "BinaryField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
+    "auto": (lambda field_name, verbose_name, *args, **kwargs: "AutoField(verbose_name=\"{verbose_name}\")".format(verbose_name=verbose_name)),
 }
 
 
@@ -58,7 +56,10 @@ def normalize_single_field(field):
     :type field: unicode
     :rtype: dict
     """
-    field_name, field_type = field.split(":")
+    try:
+        field_name, field_type, field_verbose_name = field.split(":")
+    except ValueError:
+        field_name, field_type = field.split(":"); field_verbose_name = field_name
 
     if not field_type or field_type not in MAPPINGS:
         raise SchemaError("Type {} is invalid".format(field_type))
@@ -67,7 +68,8 @@ def normalize_single_field(field):
 
     return {
         "name": field_name,
-        "class": field_class(field_name) if is_callable(field_class) else field_class
+        "verbose_name": field_verbose_name,
+        "class": field_class(field_name, field_verbose_name) if is_callable(field_class) else field_class
     }
 
 
@@ -82,7 +84,8 @@ def normalize_fields(fields):
 
 def validate_model_name(model_name):
     if not re.search(MODEL_NAME_RE, model_name):
-        raise SchemaError("\"{}\" is not a valid name of Django model.".format(model_name))
+        raise SchemaError(
+            "\"{}\" is not a valid name of Django model.".format(model_name))
 
 
 def normalize_single_model(model):
@@ -92,11 +95,17 @@ def normalize_single_model(model):
     :type model: dict
     :rtype: dict
     """
-    for model_name, model_fields in list(model.items()):
+    for model_name_spec, model_fields in list(model.items()):
+        try:
+            model_name, model_verbose_name = model_name_spec.split(":")
+        except ValueError:
+            model_name, model_verbose_name = model_name_spec, model_verbose_name
+
         validate_model_name(model_name)
 
         return {
             "name": model_name,
+            "verbose_name": model_verbose_name,
             "fields": [f for f in normalize_fields(model_fields)]
         }
 
@@ -106,10 +115,15 @@ def normalize_single_plain_model(model):
     :type model: unicode
     :rtype: dict
     """
-    validate_model_name(model)
+    try:
+        model_name, model_verbose_name = model.split(":")
+    except ValueError:
+        model_name, model_verbose_name = model, model
+    validate_model_name(model_name)
 
     return {
-        "name": model,
+        "name": model_name,
+        "verbose_name": model_verbose_name,
         "fields": []
     }
 
@@ -132,7 +146,8 @@ def normalize_schema(innn):
     :rtype: dict
     """
     app_name = innn.get(YamlSchemaKeywords.APP_NAME)
-    normalized_models = [i for i in normalize_models(innn.get(YamlSchemaKeywords.MODELS))]
+    normalized_models = [i for i in normalize_models(
+        innn.get(YamlSchemaKeywords.MODELS))]
 
     for model in normalized_models:
         for field in model.get('fields'):

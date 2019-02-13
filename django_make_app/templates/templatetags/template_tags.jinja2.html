@@ -6,6 +6,10 @@ from django.template import Library
 register = Library()
 
 
-@register.filter
-def dummy_filter(a, b):
-    return "a is {} and b is {}".format(a, b)
+# def xplural(value):
+#     return value if not isAsciiString(value) else "%ss" % value
+
+
+# @register.filter
+# def xplural(value):
+#     return value if not isAsciiString(value) else "%ss" % value -->
