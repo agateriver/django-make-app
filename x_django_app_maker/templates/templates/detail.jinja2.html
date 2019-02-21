@@ -1,0 +1,40 @@
+[% extends "base.html" %]
+
+[% load i18n %]
+
+[% block title %]
+[% trans "Detail of" %] [[ object ]] ({{ current_model.verbose_name|capitalize }})
+[% endblock %]
+
+[% block content %]
+<h1>[% trans "Detail of" %] [[ object ]] ({{ current_model.verbose_name|capitalize }})</h1>
+
+<p>
+    <a href="[[ object.get_update_url ]]">[% trans "Edit this record" %]</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>
+            ID:
+        </th>
+
+        <td>
+            [[ object.id ]]
+        </td>
+    </tr>
+
+    {% for field in current_model.fields %}
+        <tr>
+            <th>
+                {% if field.verbose_name %}{{ field.verbose_name|capitalize }}{% else %}{{ field.name|capitalize }}{% endif %}
+            </th>
+
+            <td>
+                [[ object.{{ field.name }} ]]
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+[% endblock %]
+
