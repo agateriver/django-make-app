@@ -3,6 +3,6 @@
 
 import sys
 
-from django_make_app.runner import cli
+from x_django_app_maker.runner import cli
 
 cli(sys.argv[1:])

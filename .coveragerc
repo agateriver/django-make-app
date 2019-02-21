@@ -4,8 +4,8 @@
 
 
 [report]
-include = django_make_app/*
-omit = django_make_app/templates/*
+include = x_django_app_maker/*
+omit = x_django_app_maker/templates/*
 
 exclude_lines =
     # Don't complain if non-runnable code isn't run:

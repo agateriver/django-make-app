@@ -5,15 +5,15 @@ import io
 from setuptools import setup
 
 setup(
-    name='django_make_app',
+    name='x_django_app_maker',
     version='0.1.3',
     description='Define models and fields using YAML and generate app for Django with views, forms, templates etc.',
     long_description=io.open('README.rst', encoding='utf-8').read(),
-    url='https://github.com/illagrenan/django-make-app',
+    url='https://github.com/agateriver/x-django-app-maker',
     license='MIT',
     author='Vasek Dohnal',
     author_email='vaclav.dohnal@gmail.com',
-    packages=['django_make_app'],
+    packages=['x_django_app_maker'],
     install_requires=[
         'pyaml',
         'jinja2',
@@ -24,7 +24,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'django-make-app=django_make_app.runner:cli'
+            'x-django-app-maker=x_django_app_maker.runner:cli'
         ],
     },
     include_package_data=True,

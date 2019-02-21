@@ -1,13 +1,11 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 import os
 import tempfile
 from unittest import TestCase
 
-from django_make_app.renderers import TemplateRenderer
+from x_django_app_maker.renderers import TemplateRenderer
 
 
 class RenderersTestCase(TestCase):

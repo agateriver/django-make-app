@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 import io
 import os
@@ -10,7 +8,7 @@ from unittest import TestCase
 import click
 from click.testing import CliRunner
 
-from django_make_app.runner import cli, YAML_FILENAME
+from x_django_app_maker.runner import cli, YAML_FILENAME
 
 click.disable_unicode_literals_warning = True
 
@@ -22,7 +20,7 @@ class RunnerTestCase(TestCase):
 
     @staticmethod
     def _get_example_schema():
-        templates_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "django_make_app", u"templates", u"example.yaml")
+        templates_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "x_django_app_maker", u"templates", u"example.yaml")
 
         with io.open(templates_dir, mode='r', encoding='utf-8') as the_file:
             content = the_file.read()

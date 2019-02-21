@@ -1,15 +1,13 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 import os
 import shutil
 import tempfile
 from unittest import TestCase
 
-from django_make_app.generators import TemplateFileAppGenerator
-from django_make_app.renderers import TemplateRenderer
+from x_django_app_maker.generators import TemplateFileAppGenerator
+from x_django_app_maker.renderers import TemplateRenderer
 
 
 class GeneratorsTestCase(TestCase):
@@ -23,7 +21,7 @@ class GeneratorsTestCase(TestCase):
 
     def test_generate(self):
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        templates_dir = os.path.join(this_dir, "..", "django_make_app", "templates")
+        templates_dir = os.path.join(this_dir, "..", "x_django_app_maker", "templates")
 
         expected_structure = {
             "type": "folder",
@@ -103,7 +101,7 @@ class GeneratorsTestCase(TestCase):
 
     def test_generate_with_invalid_structure(self):
         this_dir = os.path.dirname(os.path.realpath(__file__))
-        templates_dir = os.path.join(this_dir, "..", "django_make_app", "templates")
+        templates_dir = os.path.join(this_dir, "..", "x_django_app_maker", "templates")
 
         expected_structure = {
             "type": "folder",

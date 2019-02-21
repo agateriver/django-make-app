@@ -1,14 +1,12 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 from unittest import TestCase
 
 import yaml
 
-from django_make_app.exceptions import SchemaError
-from django_make_app.schema import normalize_schema, validate_model_name, normalize_single_field
+from x_django_app_maker.exceptions import SchemaError
+from x_django_app_maker.schema import normalize_schema, validate_model_name, normalize_single_field
 
 
 class SchemaTestCase(TestCase):

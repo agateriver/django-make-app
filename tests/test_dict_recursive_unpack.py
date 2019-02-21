@@ -1,11 +1,9 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 from unittest import TestCase
 
-from django_make_app.utils import is_callable
+from x_django_app_maker.utils import is_callable
 
 
 def dummy_callable():

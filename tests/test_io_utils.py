@@ -1,14 +1,12 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 import io
 import os
 import tempfile
 from unittest import TestCase
 
-from django_make_app.io_utils import read_yaml_file, optimize_code
+from x_django_app_maker.io_utils import read_yaml_file, optimize_code
 
 
 class IOUtilsTestCase(TestCase):

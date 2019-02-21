@@ -1,12 +1,10 @@
 # -*- encoding: utf-8 -*-
-# ! python2
-
-from __future__ import (absolute_import, division, print_function, unicode_literals)
+# ! python3
 
 from unittest import TestCase
 
-from django_make_app.renderers import TemplateRenderer
-from django_make_app.structure import prepare_structure, SIMPLE_ROOT, get_next_item_name, generate_model_items, generate_template_items
+from x_django_app_maker.renderers import TemplateRenderer
+from x_django_app_maker.structure import prepare_structure, SIMPLE_ROOT, get_next_item_name, generate_model_items, generate_template_items
 
 
 class DummyTemplateRenderer(object):

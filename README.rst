@@ -1,31 +1,31 @@
-================================================
-Django Make App: *generate Django app from YAML*
-================================================
+====================================================
+X Django App Maker: *generate Django app from YAML*
+====================================================
 
-.. image:: https://badge.fury.io/py/django_make_app.svg
-        :target: https://pypi.python.org/pypi/django_make_app
+.. image:: https://badge.fury.io/py/x_django_app_maker.svg
+        :target: https://pypi.python.org/pypi/x_django_app_maker
         :alt: PyPi
 
 .. image:: https://img.shields.io/badge/license-MIT-blue.svg
-        :target: https://pypi.python.org/pypi/django_make_app/
+        :target: https://pypi.python.org/pypi/x_django_app_maker/
         :alt: MIT
 
-.. image:: https://api.travis-ci.org/illagrenan/django-make-app.svg
-        :target: https://travis-ci.org/illagrenan/django-make-app
+.. image:: https://api.travis-ci.org/agateriver/x_django_app_maker.svg
+        :target: https://travis-ci.org/agateriver/x_django_app_maker
         :alt: TravisCI
 
-.. image:: https://coveralls.io/repos/github/illagrenan/django-make-app/badge.svg?branch=master
-        :target: https://coveralls.io/github/illagrenan/django-make-app?branch=master
+.. image:: https://coveralls.io/repos/github/agateriver/x_django_app_maker/badge.svg?branch=master
+        :target: https://coveralls.io/github/agateriver/x_django_app_maker?branch=master
         :alt: Coverage
 
-.. image:: https://requires.io/github/illagrenan/django-make-app/requirements.svg?branch=master
-     :target: https://requires.io/github/illagrenan/django-make-app/requirements/?branch=master
+.. image:: https://requires.io/github/agateriver/x_django_app_maker/requirements.svg?branch=master
+     :target: https://requires.io/github/agateriver/x_django_app_maker/requirements/?branch=master
      :alt: Requirements Status
 
 Introduction
 ------------
 
-Django-make-app will generate code of your Django app from a simple YAML schema. This is similar to ``manage.py startapp`` but much powerful.
+x_django_app_maker will generate code of your Django app from a simple YAML schema. This is similar to ``manage.py startapp`` but much powerful.
 
 This will be generated from models definitions:
 
@@ -48,7 +48,7 @@ Supported Python versions are:  ``3.4+`` and ``pypy3``.
 
 .. code:: shell
 
-    pip install --upgrade django-make-app
+    pip install --upgrade x_django_app_maker
 
 Usage
 -----
@@ -59,31 +59,31 @@ If you want to generate app called ``library``, create a file ``app_schema.yaml`
 
     apps:
         -
-            name: library           # all files will be generated into library/ directory (will be created)
+            name: library:图书馆          # all files will be generated into library/ directory (will be created)
             models:
-              - User:               # model name
+              - User:                    # model name
                 - name:char:Name         # model field "name" of type "char" and verbose_name "Name"
-                - email:char:EMail        # model field "email" of type "char" and verbose_name "EMail"
-              - Book:               # another model
-                - library:fk:Library        # model field "library" of type "foreign key" to "library",and verbose_name "EMail"
-              - Article             # empty model without fields
+                - email:char:EMail       # model field "email" of type "char" and verbose_name "EMail"
+              - Book:                    # another model
+                - library:fk:Library     # model field "library" of type "foreign key" to "library",and verbose_name "EMail"
+              - Article                  # empty model without fields
         -
             name: my_another_awesome_app
             models:
                 - City
                 - Country
 
-You can also print example configuration by executing (or check `templates/example.yaml <https://github.com/illagrenan/django-make-app/blob/master/django_make_app/templates/example.yaml>`__):
+You can also print example configuration by executing (or check `templates/example.yaml <https://github.com/agateriver/x_django_app_maker/blob/master/x_django_app_maker/templates/example.yaml>`__):
 
 .. code:: shell
 
-    django-make-app write_config > apps_schema.yaml
+    x_django_app_maker write_config > apps_schema.yaml
 
 Finally to generate source code of your app, execute:
 
 .. code:: shell
 
-    django-make-app generate library
+    x_django_app_maker generate library
 
 This structure will be generated:
 

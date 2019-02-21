@@ -8,7 +8,7 @@ from invoke import run, task
 
 @task
 def clean_build():
-    shutil.rmtree('django_make_app.egg-info', ignore_errors=True)
+    shutil.rmtree('x_django_app_maker.egg-info', ignore_errors=True)
     shutil.rmtree('build', ignore_errors=True)
     shutil.rmtree('dist', ignore_errors=True)
     shutil.rmtree('__pycache__', ignore_errors=True)
@@ -16,7 +16,7 @@ def clean_build():
 
 @task
 def lint():
-    run("flake8 django_make_app tests")
+    run("flake8 x_django_app_maker tests")
 
 
 @task
@@ -31,7 +31,7 @@ def test_all():
 
 @task
 def test_cov():
-    run("py.test --verbose --showlocals --cov=django_make_app tests/")
+    run("py.test --verbose --showlocals --cov=x_django_app_maker tests/")
 
 
 @task
@@ -46,7 +46,7 @@ def test_nosetests():
 
 @task
 def coverage():
-    run("coverage run --source django_make_app setup.py test")
+    run("coverage run --source x_django_app_maker setup.py test")
     run("coverage report -m")
     run("coverage html")
 
@@ -58,10 +58,10 @@ def install_requirements():
 
 @task
 def test_install():
-    run("pip uninstall django_make_app --yes", warn=True)
+    run("pip uninstall x_django_app_maker --yes", warn=True)
 
-    run("pip install --use-wheel --no-index --find-links dist django_make_app")
-    run("pip uninstall django_make_app --yes")
+    run("pip install --use-wheel --no-index --find-links dist x_django_app_maker")
+    run("pip uninstall x_django_app_maker --yes")
 
 
 @task
